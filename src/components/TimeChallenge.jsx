@@ -4,13 +4,15 @@ import ResultModel from './ResultModel'
 
 export default function TimeChallenge({ title, targetTime }) {
 	const timer = useRef()
+    const dialog = useRef()
 
 	const [timerExpired, setTimerExpired] = useState(false)
 	const [timeStart, setTimeStart] = useState(false)
 
 	function handleStart() {
 		timer.current = setTimeout(() => {
-			setTimerExpired(true)
+			setTimerExpired(true);
+            dialog.current.showModal();
 		}, targetTime * 1000)
 		setTimeStart(true)
 	}
@@ -20,7 +22,7 @@ export default function TimeChallenge({ title, targetTime }) {
 	}
 
 	return (<>
-    {timerExpired && <ResultModel targetTime={targetTime} result="lose"/>}
+     <ResultModel ref={dialog} targetTime={targetTime} result="lose"/>
 		<section className="challenge">
 			<h2>{title}</h2>
 			<p className="challenge-time">
